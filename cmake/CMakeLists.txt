@@ -1,4 +1,5 @@
 # Prepare the build environment
+set(SHARED_ROOT "${CMAKE_CURRENT_LIST_DIR}/..")
 include_directories(${LIBIGL_INCLUDE_DIRS})
 add_definitions(${LIBIGL_DEFINITIONS})
 option(USE_SOLUTION "Use solution"  OFF)
@@ -26,5 +27,8 @@ elseif(COMPILER_SUPPORTS_CXX0X)
 else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
+
 add_executable(${PROJECT_NAME} ${SRCFILES} ${LIBIGL_EXTRA_SOURCES})
+target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC ${SHARED_ROOT}/eigen)
+target_include_directories(${PROJECT_NAME} SYSTEM PUBLIC ${SHARED_ROOT}/json)
 target_link_libraries(${PROJECT_NAME} ${LIBIGL_LIBRARIES} ${LIBIGL_EXTRA_LIBRARIES})
